@@ -1,45 +1,126 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Dodgeballin'</title>
-  </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=450 height=800 tabindex="-1" style="width: 450px; height: 800px; background: url('Build/Dodgeballin-Web.jpg') center / cover"></canvas>
-    <script src="Build/Dodgeballin-Web.loader.js"></script>
-    <script>
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
+	<head>
+		<meta charset="utf-8">
+			<meta
+			  http-equiv="Content-Type"
+			  content="text/html; charset=utf-8"
+  >
 
-        var canvas = document.querySelector("#unity-canvas");
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        canvas.style.position = "fixed";
+				<meta
+				  name="viewport"
+				  content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes"
+  >
 
-        document.body.style.textAlign = "left";
+					<title>Unity Web Player | Dodgeballin'</title>
 
-      }
+					<style>
+						* {
+						box-sizing: border-box;
+						}
 
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        arguments: [],
-        dataUrl: "Build/Dodgeballin-Web.data",
-        frameworkUrl: "Build/Dodgeballin-Web.framework.js",
-        codeUrl: "Build/Dodgeballin-Web.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "CamCo Games",
-        productName: "Dodgeballin'",
-        productVersion: "1.4",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-      }).then((unityInstance) => {
-      }).catch((message) => {
-        alert(message);
-      });
-    </script>
-  </body>
+						html,
+						body {
+						width: 100%;
+						height: 100%;
+						margin: 0;
+						padding: 0;
+						border: 0;
+						overflow: hidden;
+						background: #000;
+						}
+
+						body {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						}
+
+						#game-container {
+						position: relative;
+						width: 450px;
+						height: 800px;
+						flex: 0 0 450px;
+
+						border: 6px solid #00EFFF;
+						overflow: hidden;
+						background: #000;
+						}
+
+						#unity-canvas {
+						display: block;
+						width: 450px;
+						height: 800px;
+						margin: 0;
+						padding: 0;
+						border: 0;
+
+						background:
+						url("Build/Dodgeballin-Web.jpg")
+						center / cover
+						no-repeat;
+						}
+
+						@media (max-width: 600px), (max-height: 850px) {
+						body {
+						display: block;
+						}
+
+						#game-container {
+						position: fixed;
+						inset: 0;
+
+						width: 100%;
+						height: 100%;
+						max-width: none;
+						max-height: none;
+						flex: none;
+
+						border: 6px solid #00EFFF;
+						}
+
+						#unity-canvas {
+						width: 100%;
+						height: 100%;
+						}
+						}
+					</style>
+				</head>
+
+	<body>
+		<div id="game-container">
+			<canvas
+			  id="unity-canvas"
+			  width="450"
+			  height="800"
+			  tabindex="-1"
+    ></canvas>
+		</div>
+
+		<script src="Build/Dodgeballin-Web.loader.js"></script>
+
+		<script>
+			const canvas = document.querySelector("#unity-canvas");
+
+			createUnityInstance(canvas, {
+			arguments: [],
+			dataUrl: "Build/Dodgeballin-Web.data",
+			frameworkUrl: "Build/Dodgeballin-Web.framework.js",
+			codeUrl: "Build/Dodgeballin-Web.wasm",
+			streamingAssetsUrl: "StreamingAssets",
+			companyName: "CamCo Games",
+			productName: "Dodgeballin'",
+			productVersion: "1.4"
+
+			// These remain unchanged:
+			// matchWebGLToCanvasSize: false,
+			// devicePixelRatio: 1
+			})
+			.then((unityInstance) => {
+			})
+			.catch((message) => {
+			alert(message);
+			});
+		</script>
+	</body>
 </html>
